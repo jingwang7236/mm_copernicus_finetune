@@ -22,5 +22,5 @@ torchrun --nnodes=1 --nproc_per_node=4 --master_port=25416 tools/test.py configs
 
 
 
-## 9-pastis数据集-哥白尼-微调训练
+## pastis数据集-哥白尼-微调训练
 torchrun --nnodes=1 --nproc_per_node=2 --master_port=25420 tools/train.py configs/LP_copernicus_fm_base_finetune.py --launcher pytorch --amp
