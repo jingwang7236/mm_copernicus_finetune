@@ -1,0 +1,15 @@
+# 节点9-pastis数据集-哥白尼-微调
+export PYTHONPATH=/mnt/ht2-nas2/wj/PASTIS_evel/CEF:$PYTHONPATH
+export CUDA_VISIBLE_DEVICES="6, 7"
+
+
+# 节点9-pastis数据集-哥白尼-冻结训练
+torchrun --nnodes=1 --nproc_per_node=2 --master_port=25419 tools/train.py configs/LP_copernicus_fm_base_frozen.py --launcher pytorch --amp
+
+# 节点9-pastis数据集-哥白尼-推理
+torchrun --nnodes=1 --nproc_per_node=4 --master_port=25416 tools/test.py configs/upernet_copernicus-fm-base_1xb16-50e_pastis-processed-s2-64x64-1.py /mnt/ht2-nas2/wj/PASTIS_evel/CEF/save/pastis_seg_lr0.0005/best_mIoU_epoch_40.pth --launcher pytorch --work-dir save/swinv2_infer
+
+
+
+# 节点9-pastis数据集-哥白尼-微调训练
+torchrun --nnodes=1 --nproc_per_node=2 --master_port=25420 tools/train.py configs/LP_copernicus_fm_base_finetune.py --launcher pytorch --amp
